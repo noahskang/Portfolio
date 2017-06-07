@@ -2,13 +2,13 @@ require_relative 'piece'
 require_relative 'sliding_piece'
 # require_relative 'board'
 
-class Bishop < Piece
+class Queen < Piece
 include SlidingPiece
 
   def initialize(pos, color = :whatever, board)
     super
-    @white_symbol = "\u2657"
-    @black_symbol = "\u265d"
+    @white_symbol = "\u2655"
+    @black_symbol = "\u265b"
   end
 
 end

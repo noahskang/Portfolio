@@ -4,6 +4,7 @@ require_relative 'cursor.rb'
 require 'colorize'
 
 class Display
+  attr_reader :board
   def initialize(board = Board.new)
     @cursor = Cursor.new([0, 0], board)
     @board = board
@@ -14,9 +15,24 @@ class Display
       row.each_with_index do |col, y|
         piece = @board[[x, y]]
         if @cursor.cursor_pos == [x, y]
-          print "#{piece} ".colorize(:color => :red, :background => :yellow)
+          if @cursor.selected
+            print "#{piece} ".blue.on_red.blink
+            @cursor.toggle_selected
+          else
+            print "#{piece} ".colorize(:background => :yellow)
+          end
+        elsif x % 2 == 0
+          if y % 2 == 0
+            print "#{piece} ".colorize(:background => :white)
+          else
+            print "#{piece} ".colorize(:background => :blue)
+          end
         else
-          print "#{piece} ".colorize(:background => :light_blue)
+          if y % 2 ==0
+            print "#{piece} ".colorize(:background => :blue)
+          else
+            print "#{piece} ".colorize(:background => :white)
+          end
         end
       end
       puts "\n"
