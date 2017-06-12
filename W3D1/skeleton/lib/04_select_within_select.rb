@@ -60,6 +60,7 @@ def richer_than_england
   FROM
     countries
   WHERE
+    continent = 'Europe' AND 
     gdp/population > (
       SELECT
         gdp/population
@@ -129,22 +130,15 @@ def sparse_continents
   FROM
     countries
   WHERE
-    continent IN (
+    continent NOT IN (
       SELECT
         continent
-      FROM
+        FROM
         countries
-      WHERE
-        population < (
-          SELECT
-            continent, MAX(population) AS population
-          FROM
-            countries
-          WHERE
-            max < 25000000
-          GROUP BY
-            continent
-        )
+        WHERE
+        population >= 25000000
       )
+
+
   SQL
 end
