@@ -33,12 +33,13 @@ MOVES = {
 
 class Cursor
 
-  attr_reader :cursor_pos, :board
+  attr_reader :cursor_pos, :board, :selected
 
   def initialize(cursor_pos, board)
     @cursor_pos = cursor_pos
     @board = board
     @prev_pos = nil
+    @selected = false
   end
 
   def get_input
@@ -53,7 +54,11 @@ class Cursor
       @cursor_pos = @prev_pos
       retry
     end
+    # @cursor_pos
+  end
 
+  def toggle_selected
+    @selected ? @selected = false : @selected = true
   end
 
   private
@@ -91,8 +96,10 @@ class Cursor
     case key
     when :space
       @cursor_pos
+      toggle_selected
     when :return
       @cursor_pos
+      toggle_selected
     when :ctrl_c
       Process.exit(0)
     else
@@ -100,13 +107,9 @@ class Cursor
     end
   end
 
-  def update_pos(diff)
 
-    # raise Exception.new("invalid move") unless @board.in_bounds(new_pos)
-    # rescue
-    #   # get_input
-    #   retry
-    # end
+
+  def update_pos(diff)
     x, y = diff
     @prev_pos = @cursor_pos
     new_pos = [@cursor_pos.first + x, @cursor_pos.last + y]
