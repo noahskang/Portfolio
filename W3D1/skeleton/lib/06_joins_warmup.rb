@@ -36,12 +36,24 @@ end
 def films_from_sixty_two
   # List the films where the yr is 1962 [Show id, title]
   execute(<<-SQL)
+  SELECT
+    id, title
+  FROM
+    movies
+  WHERE
+    yr = 1962;
   SQL
 end
 
 def year_of_kane
   # Give year of 'Citizen Kane'.
   execute(<<-SQL)
+  SELECT
+    id, title
+  FROM
+    movies
+  WHERE
+    yr = 1962;
   SQL
 end
 
@@ -62,12 +74,28 @@ end
 def glenn_close_id
   # What id number does the actress 'Glenn Close' have?
   execute(<<-SQL)
+  SELECT
+    id
+  FROM
+    movies
+  INNER JOIN castings
+    ON movies.id = castings.movie_id
+  INNER JOIN actors
+    ON castings.actor_id = actors.id
+  WHERE
+    id = 'Glenn Close'
   SQL
 end
 
 def casablanca_id
   # What is the id of the film 'Casablanca'?
   execute(<<-SQL)
+    SELECT
+      id
+    FROM
+      movies
+      WHERE
+      title = 'Casablanca'
   SQL
 end
 
@@ -75,11 +103,31 @@ def casablanca_cast
   # Obtain the cast list for 'Casablanca'. Use the id value that you obtained
   # in the previous question directly in your query (for example, id = 1).
   execute(<<-SQL)
+    SELECT
+      name
+    FROM
+      castings c
+    INNER JOIN actors a
+      ON c.actor_id = a.id
+    WHERE
+      movie_id = 27
+
   SQL
 end
 
 def alien_cast
   # Obtain the cast list for the film 'Alien'
   execute(<<-SQL)
+  SELECT
+    name
+  FROM
+    movies m
+  INNER JOIN castings c
+    ON m.id = c.movie_id
+  INNER JOIN actors a
+    ON c.actor_id = a.id
+  WHERE
+    title = 'Alien'
+
   SQL
 end
