@@ -111,7 +111,6 @@ def casablanca_cast
       ON c.actor_id = a.id
     WHERE
       movie_id = 27
-
   SQL
 end
 
