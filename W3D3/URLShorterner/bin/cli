@@ -1,0 +1,23 @@
+puts 'Give me your email'
+
+email = gets.chomp
+user_email = User.select { |u| u.email == email }
+
+puts 'What do you want to do?
+0. Create shortened URL
+1. Visit shortened URL'
+
+input = gets.chomp.to_i
+
+case input
+when 0
+  puts 'type your long url'
+  long_url = gets.chomp
+  short_url = ShortenedUrl.shortener(long_url, user_email.first)
+  puts "Short url is #{short_url}"
+when 1
+  puts 'type in the shortened url'
+  short = gets.chomp
+  shortened = ShortenedUrl.select { |u| u.short_url == short}
+  puts "Launching #{shortened.first.long_url}"
+end
