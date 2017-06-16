@@ -7,17 +7,36 @@ end
 def golden_age
   # Find the decade with the highest average movie score.
 
+  Movie
+    .select("AVG(score), (yr/10) * 10 AS decade")
+    .group("decade")
+    .order("avg(score) DESC")
+    .first
+    .decade
 end
 
 def costars(name)
   # List the names of the actors that the named actor has ever appeared with.
   # Hint: use a subquery
 
+  subquery = Movie.select(:id).joins(:actors).where(actors: {name: name})
+
+  Movie
+    .joins(:actors)
+    .where.not(actors: {name: name})
+    .where(movies: {id: subquery})
+    .distinct
+    .pluck(:name)
+
 end
 
 def actor_out_of_work
   # Find the number of actors in the database who have not appeared in a movie
-
+  Actor
+    .select(:name)
+    .joins("LEFT OUTER JOIN castings on castings.actor_id = actors.id")
+    .where(castings: {movie_id: nil})
+    .count
 end
 
 def starring(whazzername)
@@ -27,6 +46,10 @@ def starring(whazzername)
 
   # ex. "Sylvester Stallone" is like "sylvester" and "lester stone" but not like "stallone sylvester" or "zylvester ztallone"
 
+  matcher = "%#{whazzername.split(//).join("%")}%"
+  Movie.joins(:actors).where("UPPER(actors.name) LIKE UPPER(?)" matcher)
+
+  # Actor.where("n"ame iLike ?", matcher)
 end
 
 def longest_career
@@ -34,4 +57,10 @@ def longest_career
   # (the greatest time between first and last movie).
   # Order by actor names. Show each actor's id, name, and the length of their career.
 
+  Actor
+    .select(:name, :id, "MAX(movies.yr) - MIN(movies.yr) AS career")
+    .joins(:movies)
+    .order("career DESC, name")
+    .group(:id)
+    .limit(3)
 end
