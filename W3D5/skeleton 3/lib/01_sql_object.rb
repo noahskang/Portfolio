@@ -57,11 +57,11 @@ class SQLObject
       SELECT
         *
       FROM
-        #{self.table_name}
+        #{table_name}
       WHERE
         id = ?
     SQL
-    a.empty? ? nil : self.new(a.first)
+    a.empty? ? nil : new(a.first)
   end
 
   def initialize(params = {})
@@ -85,7 +85,7 @@ class SQLObject
 
   def attribute_values
     # ...
-    self.class.columns.map{|ele| self.send(ele)}
+    self.class.columns.map{|ele| send(ele)}
   end
 
   def insert
@@ -121,6 +121,6 @@ class SQLObject
 
   def save
     # ...
-    id.nil? ? insert : update 
+    id.nil? ? insert : update
   end
 end
