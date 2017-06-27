@@ -1,0 +1,29 @@
+# == Schema Information
+#
+# Table name: posts
+#
+#  id         :integer          not null, primary key
+#  title      :string
+#  url        :string
+#  content    :text
+#  author_id  :integer
+#  sub_id     :integer
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  url: MyString
+  content: MyText
+  author_id: 1
+  sub_id: 1
+
+two:
+  title: MyString
+  url: MyString
+  content: MyText
+  author_id: 1
+  sub_id: 1

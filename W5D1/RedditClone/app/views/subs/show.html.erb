@@ -1,0 +1,33 @@
+<h1><%= @sub.title %></h1>
+
+<%= @sub.description %>
+
+<form action="<%= sub_posts_url(@sub) %>" method="post">
+  <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+  <label>Title
+    <input type="text" name="post[title]" >
+  </label>
+  <label>Content
+    <input type="text" name="post[content]">
+  </label>
+  </br>
+  </br>
+</br>
+  <label>Post to Sub Discussions:
+    <% Sub.all.each do |sub| %>
+      <input type="checkbox" name="post[sub_ids][]" value="<%= sub.id %>"> <%= sub.title %> </br>
+    <% end  %>
+  </label>
+  <input type="submit" name="" value="Create Post!">
+</form>
+
+</br>
+
+<% @sub.posts.each do |post| %>
+  <%= post.title %>
+  <%= post.content %>
+</br>
+<% end %>
+
+
+<%= link_to "All Discussions", subs_url %>
