@@ -1,0 +1,31 @@
+ul{
+  width: 150px;
+  float: left;
+  margin-right: 50px;
+  border-bottom: 50px;
+  border-color: blue;
+  height: 300px;
+  background-color: gray;
+}
+
+li{
+  list-style: none;
+  height: 75px;
+  border-radius: 20px;
+  margin-bottom: 10px;
+}
+
+.t1{
+  width: 30%;
+  background-color: gold;
+}
+
+.t2{
+  width: 60%;
+  background-color: gold;
+}
+
+.t3{
+  width: 90%;
+  background-color: gold;
+}
