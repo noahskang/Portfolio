@@ -1,0 +1,44 @@
+.sections-nav {
+  display: flex;
+  flex-direction: row;
+  border-bottom: 1px solid $light-gray;
+  justify-content: center;
+}
+
+.sections-nav ul {
+	display: flex;
+	padding: 10px 0;
+}
+
+.sections-nav li{
+  margin: 0 10px;
+  font-family: $sans-serif;
+  cursor: pointer;
+  border-left: 1px solid $light-gray;
+  padding: 0 5px;
+}
+
+.sections-nav li:hover:not(:last-child){
+  background-color: $light-gray;
+}
+
+.sections-nav li{
+  font-size: 10px;
+  text-transform: capitalize;
+  font-weight: bold;
+}
+
+.sections-nav li:last-child{
+  font-size: 10px;
+  text-transform: uppercase;
+}``
+
+.sections-nav a:hover{
+  text-decoration: underline;
+}
+
+@media all and (max-width:850px){
+  .sections-nav{
+    display: none;
+  }
+}
