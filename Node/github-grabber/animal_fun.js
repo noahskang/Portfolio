@@ -29,35 +29,41 @@ const server = http.createServer((req, res) => {
 
   let query = querystring.parse(req.url.split("/?")[1]);
 
-  getAnimalsMatchingLetter(query["letter"], (list)=>{
-    res.write(list);
-    res.end();
-  });
-
+  if(Object.keys(animalList).length===0) {
+    getAnimalList((animalObject)=>{
+      filterAnimals(query["letter"], animalObject, (list)=>{
+        res.write(list);
+        res.end();
+      });
+    });
+  } else {
+    filterAnimals(query["letter"], animalList, (list)=>{
+      res.write(list);
+      res.end();
+    });
+  }
 
 });
 
-const getAnimalsMatchingLetter = (letter, cb) => {
-  console.log("letter", letter);
-  let returnValue = "";
 
+const animalList = {};
+
+const filterAnimals = (letter, animalObject, cb) => {
+  let newary = animalObject["list"].filter((ele)=>{
+    return ele[0]===letter.toUpperCase();
+  });
+  cb(newary.join("\n"));
+};
+
+const getAnimalList = (cb) => {
   fs.readFile('./animals.txt', 'utf-8', (err, data)=>{
-
     if(err){
       throw(err);
     } else {
-      const ary = data.split("\n");
-      const newary = [];
-
-      ary.forEach((ele)=>{
-        if(ele[0]===letter.toUpperCase()) newary.push(ele);
-      });
-
-      cb(newary.join("\n"));
+      cb({list: data.split("\n")});
     }
   });
 };
-
 
 server.listen(port, (err)=> {
   if(err){
